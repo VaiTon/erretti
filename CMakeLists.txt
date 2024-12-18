@@ -27,11 +27,13 @@ if ("${CMAKE_GENERATOR}" STREQUAL "Ninja")
     add_compile_options(-fdiagnostics-color=always)
 endif ()
 
-set(SOURCES src/utils.h src/ray.h src/ray.c src/vec3.h src/shapes.h src/shapes.c
-        src/world.h src/world.c src/hit_record.c src/hit_record.h src/material.h src/scatter.c
-        src/camera.c src/camera.h
+set(SOURCES
 )
 
+add_library(raytracing src/utils.h src/ray.h src/ray.c src/vec3.h src/shapes.h src/shapes.c
+        src/world.h src/world.c src/hit_record.c src/hit_record.h src/material.h src/scatter.c
+        src/camera.c src/camera.h)
+
 # Definisci l'eseguibile da costruire
-add_executable(rtracer)
-target_sources(rtracer PRIVATE ${SOURCES} src/main.c)
+add_executable(rtracer src/main.c)
+target_link_libraries(rtracer PRIVATE raytracing)
