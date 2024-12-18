@@ -1,0 +1,5 @@
+---
+BasedOnStyle: LLVM
+AlignConsecutiveAssignments: AcrossComments
+AlignConsecutiveDeclarations: AcrossComments
+ColumnLimit: 100
