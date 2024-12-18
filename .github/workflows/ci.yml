@@ -1,0 +1,37 @@
+name: "CI"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build_and_test:
+    name: "Build and test"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+      - name: "Install dependencies"
+        run: sudo apt-get install -y gcc cmake ninja-build imagemagick
+
+      - name: "Configure"
+        run: cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug
+
+      - name: "Build"
+        run: cmake --build build
+
+      - name: "Test"
+        run: ./build/rtracer out.ppm 1280 720 5
+
+      - name: "Convert to PNG"
+        run: convert out.ppm out.png
+
+      - name: "Upload artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: out.png
+          path: out.png
